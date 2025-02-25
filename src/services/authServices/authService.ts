@@ -1,6 +1,16 @@
+
 import axios from "axios";
 
-const BASE_URL = process.env.v1BaseUrl
+
+
+declare namespace NodeJS {
+    interface ProcessEnv {
+      REACT_APP_BASE_URL: string;
+    }
+  }
+  
+
+const BASE_URL = process.env.REACT_APP_BASE_URL
 ;
 
 export interface LoginResponse {

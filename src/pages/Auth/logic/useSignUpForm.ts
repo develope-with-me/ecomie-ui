@@ -1,16 +1,16 @@
 // useSignUpForm.ts
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../../services/authService";
+import { registerUser } from "../../../services/authServices/authService";
 
 interface FormValues {
   email: string;
   password: string;
-//   locality: string;
-//   telephone: string;
+  //   locality: string;
+  //   telephone: string;
   firstname: string;
   lastname: string;
-//   confirmPassword: string;
+  //   confirmPassword: string;
 }
 
 export const useSignUpForm = () => {
@@ -31,7 +31,9 @@ export const useSignUpForm = () => {
   const [apiError, setApiError] = useState<string | null>(null); // API error state
   const [loading, setLoading] = useState(false); // Loading state
   useEffect(() => {
-    const allFieldsFilled = Object.values(formValues).every((value) => value.trim() !== "");
+    const allFieldsFilled = Object.values(formValues).every(
+      (value) => value.trim() !== ""
+    );
     setIsFormComplete(allFieldsFilled);
   }, [formValues]);
 
@@ -86,19 +88,19 @@ export const useSignUpForm = () => {
     setApiError(null); // Clear any previous API errors
 
     if (validate()) {
-        setLoading(true); // Show loading indicator
-        try {
-            const response = await registerUser(formValues); // Call the registration API
-            console.log("Registration successful:", response);
-            alert("Registration successful!");
-            navigate("/"); // Redirect on success
-          } catch (error: any) {
-            setApiError(error.message || "Registration failed. Please try again."); // Set API error
-          } finally {
-            setLoading(false); // Hide loading indicator
-          }
-        }
-      };
+      setLoading(true); // Show loading indicator
+      try {
+        const response = await registerUser(formValues); // Call the registration API
+        console.log("Registration successful:", response);
+        alert("Registration successful!");
+        navigate("/"); // Redirect on success
+      } catch (error: any) {
+        setApiError(error.message || "Registration failed. Please try again."); // Set API error
+      } finally {
+        setLoading(false); // Hide loading indicator
+      }
+    }
+  };
 
   return {
     formValues,
@@ -108,6 +110,5 @@ export const useSignUpForm = () => {
     handleSubmit,
     apiError,
     loading,
-
   };
 };
